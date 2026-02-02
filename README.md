@@ -1,98 +1,98 @@
 # commit2report
 
-GitHub コミットURLからテキスト形式のレポートを生成するCLIツール。OneNoteなどへのコピペに最適化されたフォーマットで出力します。
+A CLI tool that generates text reports from GitHub commit URLs. Outputs in a format optimized for copy-paste into OneNote and similar applications.
 
-## 特徴
+## Features
 
-- 複数のコミットURLを一括処理
-- プライベート・パブリックリポジトリ両対応
-- 変更ファイル一覧と差分内容を含む詳細レポート
-- Jupyter Notebookのコードセル変更を読みやすく表示（マークダウンセルは省略）
-- 差分行数の制限オプション
-- コピペしやすいプレーンテキスト出力
+- Batch processing of multiple commit URLs
+- Supports both private and public repositories
+- Detailed reports including changed file lists and diff contents
+- Jupyter Notebook code cell changes displayed in readable format (markdown cells omitted)
+- Option to limit diff line count
+- Plain text output for easy copy-paste
 
-## インストール
+## Installation
 
 ```bash
-# リポジトリをクローン
+# Clone the repository
 git clone <repository-url>
 cd commit2report
 
-# インストール
+# Install
 pip install -e .
 ```
 
-## セットアップ
+## Setup
 
-1. GitHub Personal Access Token (PAT) を作成
-   - https://github.com/settings/tokens にアクセス
-   - 「Generate new token (classic)」をクリック
-   - スコープ: `repo`（プライベートリポジトリ用）または `public_repo`（パブリックのみ）
+1. Create a GitHub Personal Access Token (PAT)
+   - Go to https://github.com/settings/tokens
+   - Click "Generate new token (classic)"
+   - Scopes: `repo` (for private repositories) or `public_repo` (for public only)
 
-2. 環境変数を設定
+2. Set the environment variable
    ```bash
-   # .envファイルを作成
+   # Create .env file
    cp .env.example .env
    
-   # .envファイルを編集してトークンを設定
+   # Edit .env file to set your token
    GITHUB_TOKEN=ghp_your_token_here
    ```
 
-   または、環境変数として直接設定:
+   Or set the environment variable directly:
    ```bash
    export GITHUB_TOKEN=ghp_your_token_here
    ```
 
-## 使い方
+## Usage
 
-### 基本的な使い方
+### Basic Usage
 
 ```bash
-# 単一のコミット
+# Single commit
 commit2report https://github.com/owner/repo/commit/abc1234
 
-# 複数のコミット（異なるリポジトリも可）
+# Multiple commits (can be from different repositories)
 commit2report \
   https://github.com/owner/repo1/commit/abc1234 \
   https://github.com/owner/repo2/commit/def5678
 ```
 
-### ファイルからURLを読み込み
+### Load URLs from File
 
 ```bash
-# commits.txt にURLを1行ずつ記載
+# List URLs in commits.txt, one per line
 commit2report --file commits.txt
 ```
 
-commits.txt の例:
+Example commits.txt:
 ```
 https://github.com/owner/repo1/commit/abc1234
 https://github.com/owner/repo2/commit/def5678
 https://github.com/owner/repo3/commit/ghi9012
 ```
 
-### 差分行数を制限
+### Limit Diff Lines
 
 ```bash
-# 各ファイルの差分を最大50行に制限
+# Limit diff to maximum 50 lines per file
 commit2report --max-diff-lines 50 https://github.com/owner/repo/commit/abc1234
 ```
 
-### Notebookセル数を制限
+### Limit Notebook Cells
 
 ```bash
-# Jupyter Notebookのコードセルを最大5つに制限
+# Limit Jupyter Notebook code cells to maximum 5
 commit2report --max-notebook-cells 5 https://github.com/owner/repo/commit/abc1234
 ```
 
-### 組み合わせ
+### Combining Options
 
 ```bash
-# ファイルからURL読み込み + 差分制限 + Notebookセル制限
+# Load URLs from file + diff limit + notebook cell limit
 commit2report --file commits.txt --max-diff-lines 100 --max-notebook-cells 5 https://github.com/extra/repo/commit/xyz
 ```
 
-## 出力例
+## Output Example
 
 ```
 ========================================
@@ -108,10 +108,10 @@ Author:  John Doe <john@example.com>
 URL:     https://github.com/owner/repo1/commit/abc1234
 
 Message:
-feat: ログイン機能を追加
+feat: Add login feature
 
-- OAuth2認証をサポート
-- セッション管理を実装
+- Support OAuth2 authentication
+- Implement session management
 
 Stats: 2 files changed, +80 insertions, -5 deletions
 
@@ -122,14 +122,14 @@ Changed Files:
 @@ -10,5 +10,15 @@
  def authenticate():
 -    pass
-+    """認証処理"""
++    """Authentication process"""
 +    token = get_token()
 +    return validate(token)
 
 ────────────────────────────────────────
 [A] src/auth/session.py (+10, -0)
 ────────────────────────────────────────
-+"""セッション管理モジュール"""
++"""Session management module"""
 +class Session:
 +    pass
 
@@ -139,32 +139,32 @@ Changed Files:
 ...
 ```
 
-## ファイルステータスの凡例
+## File Status Legend
 
-- `[A]` - Added (新規追加)
-- `[M]` - Modified (変更)
-- `[D]` - Deleted (削除)
-- `[R]` - Renamed (名前変更)
+- `[A]` - Added
+- `[M]` - Modified
+- `[D]` - Deleted
+- `[R]` - Renamed
 
-## トラブルシューティング
+## Troubleshooting
 
-### "GITHUB_TOKEN is not set" エラー
+### "GITHUB_TOKEN is not set" Error
 
-環境変数 `GITHUB_TOKEN` が設定されていません。セットアップセクションを参照してください。
+The `GITHUB_TOKEN` environment variable is not set. Refer to the Setup section.
 
-### "401 Unauthorized" エラー
+### "401 Unauthorized" Error
 
-トークンが無効か期限切れです。新しいトークンを生成してください。
+The token is invalid or expired. Generate a new token.
 
-### "404 Not Found" エラー
+### "404 Not Found" Error
 
-- リポジトリが存在しないか、アクセス権がありません
-- プライベートリポジトリの場合、トークンに `repo` スコープが必要です
+- The repository does not exist or you do not have access permissions
+- For private repositories, the token requires the `repo` scope
 
-### Rate Limit エラー
+### Rate Limit Error
 
-GitHub APIのレート制限に達しました。しばらく待ってから再試行してください。
+You have reached the GitHub API rate limit. Please wait a while and try again.
 
-## ライセンス
+## License
 
 MIT License
