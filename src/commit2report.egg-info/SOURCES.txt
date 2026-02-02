@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/commit2report/__init__.py
+src/commit2report/auth.py
+src/commit2report/fetcher.py
+src/commit2report/formatter.py
+src/commit2report/main.py
+src/commit2report/parser.py
+src/commit2report.egg-info/PKG-INFO
+src/commit2report.egg-info/SOURCES.txt
+src/commit2report.egg-info/dependency_links.txt
+src/commit2report.egg-info/entry_points.txt
+src/commit2report.egg-info/requires.txt
+src/commit2report.egg-info/top_level.txt

@@ -1,0 +1,2 @@
+[console_scripts]
+commit2report = commit2report.main:cli
