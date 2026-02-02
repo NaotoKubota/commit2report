@@ -7,7 +7,7 @@ A CLI tool that generates text reports from GitHub commit URLs. Outputs in a for
 - Batch processing of multiple commit URLs
 - Supports both private and public repositories
 - Detailed reports including changed file lists and diff contents
-- Jupyter Notebook code cell changes displayed in readable format (markdown cells omitted)
+- Jupyter Notebook changes displayed as summary (additions/deletions count)
 - Option to limit diff line count
 - Plain text output for easy copy-paste
 
@@ -78,18 +78,18 @@ https://github.com/owner/repo3/commit/ghi9012
 commit2report --max-diff-lines 50 https://github.com/owner/repo/commit/abc1234
 ```
 
-### Limit Notebook Cells
+### Verbose Mode
 
 ```bash
-# Limit Jupyter Notebook code cells to maximum 5
-commit2report --max-notebook-cells 5 https://github.com/owner/repo/commit/abc1234
+# Enable verbose (debug) output
+commit2report --verbose https://github.com/owner/repo/commit/abc1234
 ```
 
 ### Combining Options
 
 ```bash
-# Load URLs from file + diff limit + notebook cell limit
-commit2report --file commits.txt --max-diff-lines 100 --max-notebook-cells 5 https://github.com/extra/repo/commit/xyz
+# Load URLs from file + diff limit + extra URL
+commit2report --file commits.txt --max-diff-lines 100 https://github.com/extra/repo/commit/xyz
 ```
 
 ## Output Example
