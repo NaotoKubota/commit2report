@@ -34,6 +34,7 @@ GitHub コミットURLからテキスト形式のレポートを生成するCLI�
 - 複数のコミットURLを一括処理
 - プライベート・パブリックリポジトリ両対応
 - 変更ファイル一覧と差分内容を含む詳細レポート
+- Jupyter Notebookのコードセル変更を読みやすく表示（マークダウンセルは省略）
 - 差分行数の制限オプション
 - コピペしやすいプレーンテキスト出力
 
@@ -104,11 +105,18 @@ https://github.com/owner/repo3/commit/ghi9012
 commit2report --max-diff-lines 50 https://github.com/owner/repo/commit/abc1234
 ```
 
+### Notebookセル数を制限
+
+```bash
+# Jupyter Notebookのコードセルを最大5つに制限
+commit2report --max-notebook-cells 5 https://github.com/owner/repo/commit/abc1234
+```
+
 ### 組み合わせ
 
 ```bash
-# ファイルからURL読み込み + コマンドライン引数 + 差分制限
-commit2report --file commits.txt --max-diff-lines 100 https://github.com/extra/repo/commit/xyz
+# ファイルからURL読み込み + 差分制限 + Notebookセル制限
+commit2report --file commits.txt --max-diff-lines 100 --max-notebook-cells 5 https://github.com/extra/repo/commit/xyz
 ```
 
 ## 出力例

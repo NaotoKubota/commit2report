@@ -85,6 +85,13 @@ def collect_urls(urls: tuple, file: Optional[str]) -> List[str]:
     help="Maximum number of diff lines to show per file (default: unlimited).",
 )
 @click.option(
+    "--max-notebook-cells",
+    "-n",
+    type=int,
+    default=None,
+    help="Maximum number of notebook cells to show per file (default: unlimited).",
+)
+@click.option(
     "--verbose",
     "-v",
     is_flag=True,
@@ -92,7 +99,7 @@ def collect_urls(urls: tuple, file: Optional[str]) -> List[str]:
     help="Enable verbose output (debug logging).",
 )
 @click.version_option(version=__version__, prog_name="commit2report")
-def cli(urls: tuple, file: Optional[str], max_diff_lines: Optional[int], verbose: bool):
+def cli(urls: tuple, file: Optional[str], max_diff_lines: Optional[int], max_notebook_cells: Optional[int], verbose: bool):
     """
     Generate text reports from GitHub commit URLs.
 
@@ -129,7 +136,7 @@ def cli(urls: tuple, file: Optional[str], max_diff_lines: Optional[int], verbose
 
         # Generate report
         logger.info("Generating report...")
-        report = format_report(commits, max_diff_lines)
+        report = format_report(commits, max_diff_lines, max_notebook_cells)
 
         # Output report to stdout
         logger.info("Done!")
