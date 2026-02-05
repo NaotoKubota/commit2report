@@ -15,7 +15,7 @@ GitHub コミットURLからテキスト形式のレポートを生成するCLI�
 
 ```bash
 # リポジトリをクローン
-git clone <repository-url>
+git clone https://github.com/NaotoKubota/commit2report.git
 cd commit2report
 
 # インストール

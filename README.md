@@ -15,7 +15,7 @@ A CLI tool that generates text reports from GitHub commit URLs. Outputs in a for
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/NaotoKubota/commit2report.git
 cd commit2report
 
 # Install
