@@ -6,6 +6,7 @@ GitHub コミットURLからテキスト形式のレポートを生成するCLI�
 
 - 複数のコミットURLを一括処理
 - プライベート・パブリックリポジトリ両対応
+- **ローカルGitリポジトリ対応** - GitHub APIを使わずにローカルコミットからレポート生成
 - 変更ファイル一覧と差分内容を含む詳細レポート
 - Jupyter Notebookの変更をサマリー表示（追加/削除行数）
 - 差分行数の制限オプション
@@ -91,6 +92,30 @@ commit2report --verbose https://github.com/owner/repo/commit/abc1234
 # ファイルからURL読み込み + 差分制限 + 追加URL
 commit2report --file commits.txt --max-diff-lines 100 https://github.com/extra/repo/commit/xyz
 ```
+
+### ローカルGitリポジトリ
+
+GitHub APIを使わずに、ローカルGitリポジトリからレポートを生成できます：
+
+```bash
+# カレントディレクトリのHEADコミットからレポート生成
+commit2report --ref HEAD
+
+# 特定のコミットSHAを指定
+commit2report --ref abc1234
+
+# ブランチ名やタグを指定
+commit2report --ref main
+commit2report --ref v1.0.0
+
+# リポジトリのパスを指定
+commit2report --local /path/to/repo --ref HEAD
+
+# 差分制限と組み合わせ
+commit2report --ref HEAD~1 --max-diff-lines 50
+```
+
+**注意:** ローカルモードでは `GITHUB_TOKEN` の設定は不要です。
 
 ## 出力例
 

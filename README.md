@@ -6,6 +6,7 @@ A CLI tool that generates text reports from GitHub commit URLs. Outputs in a for
 
 - Batch processing of multiple commit URLs
 - Supports both private and public repositories
+- **Local Git repository support** - Generate reports from local commits without GitHub API
 - Detailed reports including changed file lists and diff contents
 - Jupyter Notebook changes displayed as summary (additions/deletions count)
 - Option to limit diff line count
@@ -91,6 +92,30 @@ commit2report --verbose https://github.com/owner/repo/commit/abc1234
 # Load URLs from file + diff limit + extra URL
 commit2report --file commits.txt --max-diff-lines 100 https://github.com/extra/repo/commit/xyz
 ```
+
+### Local Git Repository
+
+Generate reports from local Git repositories without using the GitHub API:
+
+```bash
+# Report from HEAD commit of current directory
+commit2report --ref HEAD
+
+# Report from a specific commit SHA
+commit2report --ref abc1234
+
+# Report from a specific branch or tag
+commit2report --ref main
+commit2report --ref v1.0.0
+
+# Specify repository path
+commit2report --local /path/to/repo --ref HEAD
+
+# Combine with diff limit
+commit2report --ref HEAD~1 --max-diff-lines 50
+```
+
+**Note:** Local mode does not require `GITHUB_TOKEN` setup.
 
 ## Output Example
 
